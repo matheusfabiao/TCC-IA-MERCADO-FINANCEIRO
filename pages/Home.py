@@ -15,9 +15,9 @@ def rodape():
     st.write('Desenvolvido por Matheus Fabião - 05/11/2023')
 
 
-def imagem_capa():
-    # Imagem de capa
-    st.image(r'C:\Users\Matheus Fabiao\Desktop\projetos tcc\tcc.png', use_column_width=True)
+# def imagem_capa():
+#     # Imagem de capa
+#     st.image(r'C:\Users\Matheus Fabiao\Desktop\projetos tcc\tcc.png', use_column_width=True)
 
 st.set_page_config(
     page_title='Trabalho de Conclusão de Curso',
