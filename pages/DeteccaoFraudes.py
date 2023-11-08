@@ -5,7 +5,6 @@ warnings.filterwarnings('ignore')
 # Importando bibliotecas necessárias
 import time
 import streamlit as st
-import numpy as np
 import pandas as pd
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
