@@ -47,6 +47,7 @@ def exibe_dataset(dados) -> None:
 
 # Função para exibir informações sobre o dataset
 def info_dataset():
+    st.info('Informações do Dataset')
     st.write('''**Time:** O tempo decorrido desde a primeira transação no conjunto de dados, medido em segundos.             
              **V1-V28:** Recursos anonimizados que representam várias características da transação (por exemplo, hora, localização, etc.).             
              **Amount:** O valor da transação.             
