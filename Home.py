@@ -7,7 +7,7 @@ def titulo_app():
     st.write("Deploy de Modelos Preditivos de Inteligência Artificial")
     st.write("Autor: Matheus Davi de Serrano Araújo Meireles")
     st.write("Autor: Matheus Fabião da Costa Pereira")
-    st.write("Autor: Leandro Santana de Melo")
+    st.write("Orientador: Leandro Santana de Melo")
 
 def rodape():
     # Rodapé
