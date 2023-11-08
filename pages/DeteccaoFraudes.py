@@ -109,12 +109,12 @@ def separa_dados(X_reamostrado, y_reamostrado, split):
 
 
 # Função para criar o modelo de regressão logística
-def cria_modelo():
+def cria_modelo(Hiperparametros):
     # Cria o modelo de regressão logística
-    modelo = LogisticRegression(penalty= hiperparametros['Penality'],
-                                tol= float(hiperparametros['Tol']),
-                                solver= hiperparametros['Solver'],
-                                max_iter= hiperparametros['Max_Iteration'])
+    modelo = LogisticRegression(penalty= Hiperparametros['Penality'],
+                                tol= float(Hiperparametros['Tol']),
+                                solver= Hiperparametros['Solver'],
+                                max_iter= Hiperparametros['Max_Iteration'])
     return modelo
 
 
@@ -202,7 +202,7 @@ if(st.sidebar.button("Clique Para Treinar o Modelo de Random Forest Classifier")
     
     # Cria o modelo
     st.subheader('Treinamento do Modelo')
-    linear_regression = cria_modelo()
+    linear_regression = cria_modelo(hiperparametros)
     
     # Treina o modelo
     treina_modelo(linear_regression, x_treino, y_treino)
