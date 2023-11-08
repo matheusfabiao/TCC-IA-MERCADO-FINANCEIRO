@@ -167,7 +167,7 @@ divisao = st.sidebar.select_slider('Escolha o Percentual de Divisão dos Dados e
 Solver = st.sidebar.selectbox('Algoritmo (padrão = lbfgs)', ('lbfgs', 'newton-cg', 'liblinear', 'sag'))
 Penality = st.sidebar.radio("Regularização (padrão = l2):", ('none', 'l1', 'l2', 'elasticnet'), 2)
 Max_Iteration = st.sidebar.select_slider("Número de Iterações (padrão = 100):", (50, 100, 500, 700, 1000), 100)
-Tol = st.sidebar.text_input("Tolerância Para Critério de Parada (recomendado = 1e-4 a 1e-6):", "1e-4")
+Tol = st.sidebar.text_input("Tolerância Para Critério de Parada (1e-4 a 1e-6):", "1e-4")
 
 # Dicionário Para os Hiperparâmetros
 # https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
