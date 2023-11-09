@@ -19,12 +19,12 @@ warnings.filterwarnings('ignore')
 
 
 def titulo_app():
-    st.write("TCC - Trabalho de Conclusão de Curso")
-    st.write("Deploy de Modelo Preditivo de Machine Learning")
-    st.write("Previsão do Preço de Fechamento das Ações")
-    st.write("Autor: Matheus Fabião da Costa Pereira")
-    st.write("Autor: Matheus Davi de Serrano Araújo Meireles")
-    st.write("Orientador: Leandro Santana de Melo")
+    # st.write("TCC - Trabalho de Conclusão de Curso")
+    # st.write("Deploy de Modelo Preditivo de Machine Learning")
+    # st.write("Previsão do Preço de Fechamento das Ações")
+    # st.write("Autor: Matheus Fabião da Costa Pereira")
+    # st.write("Autor: Matheus Davi de Serrano Araújo Meireles")
+    # st.write("Orientador: Leandro Santana de Melo")
     st.title("Long Short Term Memory (LSTM)")
 
 
@@ -59,31 +59,22 @@ def adiciona_informacoes(dados):
 def exibe_dataset(dados) -> None:
     # Exibir os últimos 5 dados do Dataset   
     st.subheader(f'Dataset: {ativo}')
-    st.write(dados.tail())
+    st.dataframe(dados)
     
 
 def info_dataset():
     # Exibe um expander ao clicar no botão de ajuda
     with st.expander("ℹ️ **Informações do Dataset**"):
         st.write('''
-         **Date:** Data da observação das informações financeiras.         
-         
-         **Open:** Preço de abertura do ativo no início do dia.         
-         
-         **High:** Preço mais alto atingido durante o dia.         
-         
-         **Low:** Preço mais baixo atingido durante o dia.         
-         
-         **Close:** Preço de fechamento do ativo no final do dia.         
-         
-         **Adj Close:** Preço de fechamento ajustado para eventos como dividendos.         
-         
-         **Volume:** Volume de negociações do ativo durante o dia.         
-         
-         **Daily Return:** Representa a variação percentual diária do preço de fechamento do ativo.         
-         
-         **SMA_50:** Média Móvel Simples (SMA) de 50 dias do preço de fechamento, usada para suavizar tendências de curto prazo.         
-         
+         **Date:** Data da observação das informações financeiras.                  
+         **Open:** Preço de abertura do ativo no início do dia.                  
+         **High:** Preço mais alto atingido durante o dia.                  
+         **Low:** Preço mais baixo atingido durante o dia.                  
+         **Close:** Preço de fechamento do ativo no final do dia.                  
+         **Adj Close:** Preço de fechamento ajustado para eventos como dividendos.                  
+         **Volume:** Volume de negociações do ativo durante o dia.                  
+         **Daily Return:** Representa a variação percentual diária do preço de fechamento do ativo.                  
+         **SMA_50:** Média Móvel Simples (SMA) de 50 dias do preço de fechamento, usada para suavizar tendências de curto prazo.                  
          **SMA_200:** Média Móvel Simples (SMA) de 200 dias do preço de fechamento, usada para suavizar tendências de longo prazo.
          ''')
 
@@ -370,6 +361,11 @@ def ajuda_config():
                     ''')
 
 
+st.set_page_config(
+    page_title='Previsão da Bolsa de Valores',
+    page_icon='📈'
+)
+
 # Programando a Barra Superior da Aplicação Web
 # Título
 titulo_app()
@@ -389,9 +385,10 @@ intervalo_tempo = st.sidebar.select_slider('Escolha o Intervalo de Tempo para Tr
 
 divisao = st.sidebar.select_slider('Escolha o Percentual de Divisão dos Dados em Treino e Teste (padrão = 80/20):', (0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.9), 0.8)
 
-# taxa_dropout = st.sidebar.slider('Escolha o Percentual da Taxa de Dropout (Padrão = 0.2):', min_value=0.1, max_value=0.5, value=0.2)
-# taxa_dropout = st.sidebar.selectbox('Escolha o Percentual da Taxa de Dropout (Padrão = 0.2):', (0.2, 0.3, 0.4, 0.5), 0)
-taxa_dropout = st.sidebar.text_input(label='Escolha o Percentual da Taxa de Dropout (Recomendado = entre 0.2 e 0.5):', max_chars=3, value=0.2)
+# https://keras.io/api/layers/recurrent_layers/lstm/
+
+taxa_dropout = st.sidebar.selectbox('Escolha o Percentual da Taxa de Dropout (Padrão = 0.2):', (0.2, 0.3, 0.4, 0.5), 0)
+# taxa_dropout = st.sidebar.text_input(label='Escolha o Percentual da Taxa de Dropout (Recomendado = entre 0.2 e 0.5):', max_chars=3, value=0.2)
 
 batch_size = st.sidebar.select_slider('Escolha o Tamanho Do Número de Amostras Para a Rede Neural (padrão = 1024 unidades):',(128, 256, 512, 1024), 1024)
 

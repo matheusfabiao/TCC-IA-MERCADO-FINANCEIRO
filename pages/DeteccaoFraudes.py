@@ -9,7 +9,7 @@ import pandas as pd
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report, precision_recall_curve, roc_curve, auc
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, precision_recall_curve, roc_curve, auc
 
 # Código de Detecção de Fraudes em Transações de Cartão de Crédito
 # Autor: Matheus Fabião da Costa Pereira
@@ -17,12 +17,12 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 
 # Função para exibir o título do aplicativo
 def titulo_app():
-    st.write("TCC - Trabalho de Conclusão de Curso")
-    st.write("Deploy de Modelo Preditivo de Machine Learning")
-    st.write("Previsão do Preço de Fechamento das Ações")
-    st.write("Autor: Matheus Fabião da Costa Pereira")
-    st.write("Autor: Matheus Davi de Serrano Araújo Meireles")
-    st.write("Orientador: Leandro Santana de Melo")
+    # st.write("TCC - Trabalho de Conclusão de Curso")
+    # st.write("Deploy de Modelo Preditivo de Machine Learning")
+    # st.write("Previsão do Preço de Fechamento das Ações")
+    # st.write("Autor: Matheus Fabião da Costa Pereira")
+    # st.write("Autor: Matheus Davi de Serrano Araújo Meireles")
+    # st.write("Orientador: Leandro Santana de Melo")
     st.title("Logistic Regression Model")
     
 
@@ -47,11 +47,12 @@ def exibe_dataset(dados) -> None:
 
 # Função para exibir informações sobre o dataset
 def info_dataset():
-    st.info('Informações do Dataset')
-    st.write('''**Time:** O tempo decorrido desde a primeira transação no conjunto de dados, medido em segundos.             
-             **V1-V28:** Recursos anonimizados que representam várias características da transação (por exemplo, hora, localização, etc.).             
-             **Amount:** O valor da transação.             
-             **Class:** Rótulo binário que indica se a transação é fraudulenta (1) ou não (0).''')
+    # Exibe um expander ao clicar no botão de ajuda
+    with st.expander("ℹ️ **Informações do Dataset**"):
+        st.write('''**Time:** O tempo decorrido desde a primeira transação no conjunto de dados, medido em segundos.             
+            **V1-V28:** Recursos anonimizados que representam várias características da transação (por exemplo, hora, localização, etc.).             
+            **Amount:** O valor da transação.             
+            **Class:** Rótulo binário que indica se a transação é fraudulenta (1) ou não (0).''')
 
 
 # Função para remover a coluna 'Time' dos dados
@@ -144,15 +145,44 @@ def calcula_metricas(Yteste, Previsao):
 
 # Função para exibir métricas de desempenho
 def exibe_metricas(Precisao, Recall, F1, Acuracia, Matriz_confusao):
-    # Avaliando o modelo usando as principais métricas
-    st.write(f'Precisão: {Precisao:.2f}')
-    st.write(f'Recall: {Recall:.2f}')
-    st.write(f'F1-Score: {F1:.2f}')
-    st.write(f'Acurácia: {Acuracia:.2f}')
-    st.subheader('Matriz de Confusão:')
-    st.write(Matriz_confusao)
+        # Avaliando o modelo usando as principais métricas
+        col1, col2 = st.columns(2)
+        col1.write(f'Precisão: {Precisao:.2f}')
+        col1.write(f'Recall: {Recall:.2f}')
+        col1.write(f'F1-Score: {F1:.2f}')
+        col1.write(f'Acurácia: {Acuracia:.2f}')
+        col2.subheader('Matriz de Confusão:')
+        col2.write(Matriz_confusao)
+    
+def ajuda_config():
+    # Adiciona um botão na sidebar
+    if st.sidebar.button('Ajuda com os Hiperparâmetros'):
+        # Exibe um expander ao clicar no botão de ajuda
+        with st.expander("ℹ️ **Informações de Ajuda**"):
+            st.write('''
+                    **Intervalo de Tempo:** quantidade total de dados do ativo nos últimos 'n' anos.
+                    
+                    **Divisão dos Dados:** dividir o total de dados em x% para treino da IA. Recomendado entre 0.7 e 0.8
+
+                    **Dropout:** desativa aleatoriamente neurônios durante o treinamento para evitar *overfitting*.
+                    Recomendado: entre 0.2 e 0.5
+ 
+                    **Número de Amostras:** número de exemplos de dados que a IA analisa de uma vez durante o treinamento.
+                    Quanto mais alto mais rápido o treinamento, porém exigirá mais do seu hardware.
+ 
+                    **Janela de Entrada:** é como uma "memória" que a rede utiliza para processar sequências de dados, lembrando de informações importantes ao longo do tempo.
+ 
+                    **Épocas:** quantidade de vezes que a IA percorre todo o conjunto de dados durante o treinamento. Quanto mais alto mais demorado o treinamento, porém,
+                    mais bem treinada ela será.
+                    ''')
+
     
 # CHAMADA DE FUNÇÕES
+
+st.set_page_config(
+    page_title='Detecção de Fraudes Bancárias',
+    page_icon='💰'
+)
 
 # Título
 titulo_app()
@@ -162,15 +192,20 @@ titulo_app()
 st.sidebar.header('Dataset e Hiperparâmetros')
 st.sidebar.markdown("""**Configure o Modelo de ML**""")
 
+ajuda_config()
+
 divisao = st.sidebar.select_slider('Escolha o Percentual de Divisão dos Dados em Treino e Teste (padrão = 80/20):', (0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.9), 0.8)
 
 Solver = st.sidebar.selectbox('Algoritmo (padrão = lbfgs)', ('lbfgs', 'newton-cg', 'liblinear', 'sag'))
 Penality = st.sidebar.radio("Regularização (padrão = l2):", ('none', 'l1', 'l2', 'elasticnet'), 2)
+Tol = st.sidebar.selectbox('''Tolerância Para Critério de Parada                               
+                                (padrão = 1e-4):''', ('1e-4', '1e-5', '1e-6'))
 Max_Iteration = st.sidebar.select_slider("Número de Iterações (padrão = 100):", (50, 100, 500, 700, 1000), 100)
-Tol = st.sidebar.text_input("Tolerância Para Critério de Parada (1e-4 a 1e-6):", "1e-4")
+
 
 # Dicionário Para os Hiperparâmetros
 # https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
+# https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 hiperparametros = { 'Penality':Penality, 'Tol':Tol, 'Max_Iteration':Max_Iteration, 'Solver':Solver }
 
 # Exibir os últimos 5 dados do Dataset
