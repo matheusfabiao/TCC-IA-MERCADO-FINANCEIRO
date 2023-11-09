@@ -63,17 +63,27 @@ def exibe_dataset(dados) -> None:
     
 
 def info_dataset():
-    st.info('Informações do Dataset')
-    st.write('''
+    # Exibe um expander ao clicar no botão de ajuda
+    with st.expander("ℹ️ **Informações do Dataset**"):
+        st.write('''
          **Date:** Data da observação das informações financeiras.         
+         
          **Open:** Preço de abertura do ativo no início do dia.         
+         
          **High:** Preço mais alto atingido durante o dia.         
+         
          **Low:** Preço mais baixo atingido durante o dia.         
+         
          **Close:** Preço de fechamento do ativo no final do dia.         
+         
          **Adj Close:** Preço de fechamento ajustado para eventos como dividendos.         
+         
          **Volume:** Volume de negociações do ativo durante o dia.         
+         
          **Daily Return:** Representa a variação percentual diária do preço de fechamento do ativo.         
+         
          **SMA_50:** Média Móvel Simples (SMA) de 50 dias do preço de fechamento, usada para suavizar tendências de curto prazo.         
+         
          **SMA_200:** Média Móvel Simples (SMA) de 200 dias do preço de fechamento, usada para suavizar tendências de longo prazo.
          ''')
 
@@ -211,12 +221,12 @@ def cria_modelo():
     return modelo
 
 
-def adiciona_camadas(modelo, X_treino):
+def adiciona_camadas(modelo, X_treino, Taxa_dropout):
     # Adicionando camadas LSTM
     modelo.add(LSTM(units=50, return_sequences=True, input_shape=(X_treino.shape[1], 1)))
-    modelo.add(Dropout(0.2))
+    modelo.add(Dropout(Taxa_dropout))
     modelo.add(LSTM(units=50, return_sequences=False))
-    modelo.add(Dropout(0.2))
+    modelo.add(Dropout(Taxa_dropout))
 
     # Adicionando camadas densas (fully connected)
     modelo.add(Dense(units=25))
@@ -336,6 +346,30 @@ def previsao_dia_seguinte(Cotacoes_normalizadas, Previsao_dias, modelo, Normaliz
     # Exibindo a previsão para o próximo dia
     st.write('Previsão de preço de fechamento para o próximo dia:', previsao_proximo_dia[0][0])
     
+    
+def ajuda_config():
+    # Adiciona um botão na sidebar
+    if st.sidebar.button('Ajuda com os Hiperparâmetros'):
+        # Exibe um expander ao clicar no botão de ajuda
+        with st.expander("ℹ️ **Informações de Ajuda**"):
+            st.write('''
+                    **Intervalo de Tempo:** quantidade total de dados do ativo nos últimos 'n' anos.
+                    
+                    **Divisão dos Dados:** dividir o total de dados em x% para treino da IA. Recomendado entre 0.7 e 0.8
+
+                    **Dropout:** desativa aleatoriamente neurônios durante o treinamento para evitar *overfitting*.
+                    Recomendado: entre 0.2 e 0.5
+ 
+                    **Número de Amostras:** número de exemplos de dados que a IA analisa de uma vez durante o treinamento.
+                    Quanto mais alto mais rápido o treinamento, porém exigirá mais do seu hardware.
+ 
+                    **Janela de Entrada:** é como uma "memória" que a rede utiliza para processar sequências de dados, lembrando de informações importantes ao longo do tempo.
+ 
+                    **Épocas:** quantidade de vezes que a IA percorre todo o conjunto de dados durante o treinamento. Quanto mais alto mais demorado o treinamento, porém,
+                    mais bem treinada ela será.
+                    ''')
+
+
 # Programando a Barra Superior da Aplicação Web
 # Título
 titulo_app()
@@ -349,10 +383,15 @@ ativos = ('PETR4.SA', 'MGLU3.SA', 'ITUB4.SA', 'CIEL3.SA', 'BBDC4.SA', 'BBAS3.SA'
 
 # Definindo o ativo, data de início e data de fim para a coleta de dados
 ativo = st.sidebar.selectbox('Dataset', ativos)
+ajuda_config()
 
 intervalo_tempo = st.sidebar.select_slider('Escolha o Intervalo de Tempo para Treinamento (padrão = 20 anos):', (10, 15, 20, 25, 30), 20)
 
 divisao = st.sidebar.select_slider('Escolha o Percentual de Divisão dos Dados em Treino e Teste (padrão = 80/20):', (0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.9), 0.8)
+
+# taxa_dropout = st.sidebar.slider('Escolha o Percentual da Taxa de Dropout (Padrão = 0.2):', min_value=0.1, max_value=0.5, value=0.2)
+# taxa_dropout = st.sidebar.selectbox('Escolha o Percentual da Taxa de Dropout (Padrão = 0.2):', (0.2, 0.3, 0.4, 0.5), 0)
+taxa_dropout = st.sidebar.text_input(label='Escolha o Percentual da Taxa de Dropout (Recomendado = entre 0.2 e 0.5):', max_chars=3, value=0.2)
 
 batch_size = st.sidebar.select_slider('Escolha o Tamanho Do Número de Amostras Para a Rede Neural (padrão = 1024 unidades):',(128, 256, 512, 1024), 1024)
 
