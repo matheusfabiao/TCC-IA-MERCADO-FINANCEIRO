@@ -354,7 +354,6 @@ intervalo_tempo = st.sidebar.select_slider('Escolha o Intervalo de Tempo para Tr
 
 divisao = st.sidebar.select_slider('Escolha o Percentual de Divisão dos Dados em Treino e Teste (padrão = 80/20):', (0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.9), 0.8)
 
-
 batch_size = st.sidebar.select_slider('Escolha o Tamanho Do Número de Amostras Para a Rede Neural (padrão = 1024 unidades):',(128, 256, 512, 1024), 1024)
 
 # Janela temporal

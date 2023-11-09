@@ -205,30 +205,37 @@ if(st.sidebar.button("Clique Para Treinar o Modelo de Random Forest Classifier")
     st.subheader('Treinamento do Modelo')
     linear_regression = cria_modelo(hiperparametros)
     
-    # Treina o modelo
-    treina_modelo(linear_regression, x_treino, y_treino)
+    try:
+        # Treina o modelo
+        treina_modelo(linear_regression, x_treino, y_treino)
     
-    # Barra de progressão
-    barra_progressao = st.progress(0)
-    
-    # Mostra a barra de progressão com percentual de conclusão
-    for porcentagem_completada in range(100):
-        time.sleep(0.1)
-        barra_progressao.progress(porcentagem_completada + 1)
+        # Barra de progressão
+        barra_progressao = st.progress(0)
         
-    # Info para o usuário
-    with st.spinner('Treinando o Modelo...'):
-        time.sleep(1)
+        # Mostra a barra de progressão com percentual de conclusão
+        for porcentagem_completada in range(100):
+            time.sleep(0.1)
+            barra_progressao.progress(porcentagem_completada + 1)
+            
+        # Info para o usuário
+        with st.spinner('Treinando o Modelo...'):
+            time.sleep(1)
 
-    # Info de sucesso
-    st.success("Modelo Treinado!")
-    previsao = faz_previsao(linear_regression, x_teste)
+        # Info de sucesso
+        st.success("Modelo Treinado!")
+    except Exception as e:
+        st.error(f"Erro durante o treinamento do modelo: {str(e)}")
+        
+    try:    
+        previsao = faz_previsao(linear_regression, x_teste)
     
-    # Avaliação do modelo
-    st.subheader('Avaliação do Modelo')
-    precisao, recall, f1, acuracia, matriz_confusao = calcula_metricas(y_teste, previsao)
-    exibe_metricas(precisao, recall, f1, acuracia, matriz_confusao)
-
+        # Avaliação do modelo
+        st.subheader('Avaliação do Modelo')
+        precisao, recall, f1, acuracia, matriz_confusao = calcula_metricas(y_teste, previsao)
+        exibe_metricas(precisao, recall, f1, acuracia, matriz_confusao)
+    except Exception as e:
+        st.error(f"Erro durante o cálculo de métricas ou previsões: {str(e)}")
+        
     # Teste com o modelo
     st.subheader('Validação do Modelo')
     predict = linear_regression.predict(validacao)
