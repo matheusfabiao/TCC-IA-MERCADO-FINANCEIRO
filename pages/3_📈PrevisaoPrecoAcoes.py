@@ -423,7 +423,7 @@ plotar_divisao(ativo, cotacoes_df, dias_treinamento)
 st.write('Tamanho Total do Conjunto de Dados:', len(dados_do_ativo))
 
 # Programando o Botão de Ação
-if(st.sidebar.button("Clique Para Treinar o Modelo LSTM")):
+if(st.sidebar.button("Clique Para Treinar a Rede Neural LSTM")):
     
     # Barra de progressão
     with st.spinner('Separando os Dados...'):

@@ -205,7 +205,6 @@ Max_Iteration = st.sidebar.select_slider("Número de Iterações (padrão = 100)
 
 # Dicionário Para os Hiperparâmetros
 # https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
-# https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 hiperparametros = { 'Penality':Penality, 'Tol':Tol, 'Max_Iteration':Max_Iteration, 'Solver':Solver }
 
 # Exibir os últimos 5 dados do Dataset
@@ -227,7 +226,7 @@ X_reamostrado, y_reamostrado = prepara_dados(base_dados)
 x_treino, x_teste, y_treino, y_teste = separa_dados(X_reamostrado, y_reamostrado, divisao)
 
 # Programando o Botão de Ação
-if(st.sidebar.button("Clique Para Treinar o Modelo de Random Forest Classifier")):
+if(st.sidebar.button("Clique Para Treinar o Modelo de Logistic Regression")):
     
     # Barra de progressão
     with st.spinner('Separando os Dados...'):
