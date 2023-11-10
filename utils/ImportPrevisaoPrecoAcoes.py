@@ -37,6 +37,7 @@ def converter_tempo(Intervalo) -> str:
 # Função para carregar o dataset
 @st.cache_data
 def carregar_dataset(Ativo, Intervalo):
+    # Carregando os dados
     try:
         dados = yf.download(tickers=Ativo, period=Intervalo)
         return dados

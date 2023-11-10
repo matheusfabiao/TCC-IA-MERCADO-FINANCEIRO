@@ -30,9 +30,13 @@ def titulo_app():
 @st.cache_data
 def carrega_dataset():
     # Carregando os dados
-    dados = r'C:\Users\Matheus Fabiao\Desktop\TCC-IA-MERCADO-FINANCEIRO\data\risco_credito.csv'
-    dados = pd.read_csv(dados)
-    return dados
+    try:
+        dados = r'C:\Users\Matheus Fabiao\Desktop\TCC-IA-MERCADO-FINANCEIRO\data\risco_credito.csv'
+        dados = pd.read_csv(dados)
+        return dados
+    except Exception as e:
+        st.error(f'Erro ao carregar dados: {str(e)}')
+        return None
 
 
 def pre_processar_dados(dados):

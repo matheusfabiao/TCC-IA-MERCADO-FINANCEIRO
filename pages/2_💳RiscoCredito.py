@@ -64,39 +64,44 @@ if(st.sidebar.button("Clique Para Treinar o Modelo de Random Forest Classifier")
     # Cria o modelo
     st.subheader('Treinamento do Modelo')
     random_forest_classifier = cria_modelo(hiperparametros)
-    
-    # Treina o modelo
-    treina_modelo(random_forest_classifier, x_treino, y_treino)
-    
-    # Barra de progressão
-    barra_progressao = st.progress(0)
-    
-    # Mostra a barra de progressão com percentual de conclusão
-    for porcentagem_completada in range(100):
-        time.sleep(0.1)
-        barra_progressao.progress(porcentagem_completada + 1)
+    try:
+        # Treina o modelo
+        treina_modelo(random_forest_classifier, x_treino, y_treino)
         
-    # Info para o usuário
-    with st.spinner('Treinando o Modelo...'):
-        time.sleep(1)
+        # Barra de progressão
+        barra_progressao = st.progress(0)
+        
+        # Mostra a barra de progressão com percentual de conclusão
+        for porcentagem_completada in range(100):
+            time.sleep(0.1)
+            barra_progressao.progress(porcentagem_completada + 1)
+            
+        # Info para o usuário
+        with st.spinner('Treinando o Modelo...'):
+            time.sleep(1)
 
-    # Info de sucesso
-    st.success("Modelo Treinado!")
+        # Info de sucesso
+        st.success("Modelo Treinado!")
+    except Exception as e:
+        st.error(f"Erro durante o treinamento do modelo: {str(e)}")
     
-    previsao = faz_previsao(random_forest_classifier, x_teste)
+    try:
+        previsao = faz_previsao(random_forest_classifier, x_teste)
 
-    # Avaliação do modelo
+        # Avaliação do modelo
 
-    # Acurácia do modelo
-    st.subheader('Métricas')
-    precisao, recall, f1, acuracia, matriz_confusao = calcula_metricas(y_teste, previsao)
-    
-    exibe_metricas(precisao, recall, f1, acuracia, matriz_confusao)
+        # Acurácia do modelo
+        st.subheader('Métricas')
+        precisao, recall, f1, acuracia, matriz_confusao = calcula_metricas(y_teste, previsao)
+        
+        exibe_metricas(precisao, recall, f1, acuracia, matriz_confusao)
 
-    # Validação cruzada
-    pontuacoes_validacao_cruzada = cross_val_score(estimator=random_forest_classifier, X=x_treino, y=y_treino, cv=10)
-    st.write("Média da Validação Cruzada:", pontuacoes_validacao_cruzada.mean())
-    
+        # Validação cruzada
+        pontuacoes_validacao_cruzada = cross_val_score(estimator=random_forest_classifier, X=x_treino, y=y_treino, cv=10)
+        st.write("Média da Validação Cruzada:", pontuacoes_validacao_cruzada.mean())
+    except Exception as e:
+        st.error(f"Erro durante o cálculo de métricas ou previsões: {str(e)}")
+        
     # VALIDAÇÃO DO MODELO
     
     st.subheader('Validação do Modelo')
