@@ -15,7 +15,6 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 # Autor: Matheus Fabião da Costa Pereira
 # Data de Criação: 30/10/2023
 
-
 def add_logo():
     st.markdown(
         """

@@ -74,7 +74,7 @@ def exibe_dataset(dados):
     # Exibir os últimos 5 dados do Dataset
     pre_processar_dados(dados)
     st.subheader('Dataset: Risco de Crédito')
-    st.write(dados.tail())
+    st.dataframe(dados)
     
     
 def info_dataset():
@@ -193,22 +193,22 @@ def ajuda_config():
                     ''')
 
 
-# def normaliza_novos_dados(Novos_dados, Normalizador):
-#     x = np.array(Novos_dados).reshape(1, -1)
-#     # Transforma o array 1D em 2D
-#     x = Normalizador.transform(x)
-#     return x
+def normaliza_novos_dados(Novos_dados, Normalizador):
+    x = np.array(Novos_dados).reshape(1, -1)
+    # Transforma o array 1D em 2D
+    x = Normalizador.transform(x)
+    return x
 
 
-# def previsao_novos_dados(modelo, X):
-#     good = 'Baixo Risco'
-#     bad = 'Alto Risco'
-#     previsao = modelo.predict(X)
-#     if previsao[0] == 1:
-#         st.write('O resultado da previsão foi:', bad)
-#     else:
-#         st.write('O resultado da previsão foi:', good)
-#     return previsao
+def previsao_novos_dados(modelo, X):
+    good = 'Baixo Risco'
+    bad = 'Alto Risco'
+    previsao = modelo.predict(X)
+    if previsao[0] == 1:
+        st.write('O resultado da previsão foi:', bad)
+    else:
+        st.write('O resultado da previsão foi:', good)
+    return previsao
 
 
 # def salva_modelo(nome, modelo):
@@ -267,7 +267,7 @@ x_treino, x_teste, y_treino, y_teste = separa_dados(dados_codificados, divisao)
 normalizador = declara_normalizador()
 
 x_treino, x_teste = normaliza_dados(x_treino, x_teste, normalizador)
-
+    
 # Programando o Botão de Ação
 if(st.sidebar.button("Clique Para Treinar o Modelo de Random Forest Classifier")):
     
@@ -314,6 +314,57 @@ if(st.sidebar.button("Clique Para Treinar o Modelo de Random Forest Classifier")
     pontuacoes_validacao_cruzada = cross_val_score(estimator=random_forest_classifier, X=x_treino, y=y_treino, cv=10)
     st.write("Média da Validação Cruzada:", pontuacoes_validacao_cruzada.mean())
     
+    # VALIDAÇÃO DO MODELO
+    
+    st.subheader('Validação do Modelo')
+    # Definição de variáveis
+    nome = st.session_state["nome"]
+    idade = st.session_state["idade"]
+    sexo = st.session_state["sexo"]
+    profissao = st.session_state["profissao"]
+    moradia = st.session_state["moradia"]
+    poupanca = st.session_state["poupanca"]
+    conta_corrente = st.session_state["conta_corrente"]
+    valor_do_credito = st.session_state["valor_do_credito"]
+    duracao = st.session_state["duracao"]
+    finalidade =st.session_state["finalidade"]
+
+    # # Exibição das informações
+    # st.write('Nome igual a:', nome)
+    # st.write('Idade igual a:', idade)
+    # st.write('Sexo igual a:', sexo)
+    # st.write('Profissão igual a:', profissao)
+    # st.write('Moradia igual a:', moradia)
+    # st.write('Poupança igual a:', poupanca)
+    # st.write('Conta Corrente igual a:', conta_corrente)
+    # st.write('Valor do Crédito igual a:', valor_do_credito)
+    # st.write('Duração igual a:', duracao)
+    # st.write('Finalidade igual a:', finalidade)
+
+    # Criando um dicionário com as variáveis
+    data = {
+        'Age': [idade],
+        'Sex': [sexo],
+        'Job': [profissao],
+        'Housing': [moradia],
+        'Saving accounts': [poupanca],
+        'Checking account': [conta_corrente],
+        'Credit amount': [valor_do_credito],
+        'Duration': [duracao],
+        'Purpose': [finalidade]
+    }
+
+    # Criando o DataFrame
+    df = pd.DataFrame(data)
+
+    # Exibindo o DataFrame
+    st.info(f'Exibindo dados de {nome}')
+    st.dataframe(df)
+    
+    df = codifica_dados(df)
+    
+    x = normaliza_novos_dados(df, normalizador)
+    previsao = previsao_novos_dados(random_forest_classifier, x)
     
     # Salvando o modelo
     
