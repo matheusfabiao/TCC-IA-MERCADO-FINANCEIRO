@@ -3,18 +3,45 @@ import time
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
+# import seaborn as sns
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, precision_score, precision_recall_curve, recall_score, f1_score
 import streamlit as st
 from imblearn.over_sampling import SMOTE
-import pickle
-from Home import add_logo
+# import pickle
+
 
 import warnings
 warnings.filterwarnings('ignore')
+
+
+def add_logo():
+    st.markdown(
+        """
+        <style>
+            [data-testid="stSidebarNav"] {
+                background-image: url(https://yata-apix-ad9f7b35-80ad-4665-829c-2b86020b1c6c.s3-object.locaweb.com.br/cd9cdf75398747d6b544613390fa9aee.png);
+                background-repeat: no-repeat;
+                background-size: 100% auto;
+                margin-top: 35px;
+                padding-top: 75px;
+                position: relative
+                background-position: center;
+            }
+            [data-testid="stSidebarNav"]::before {
+                content: "Main Menu";
+                margin-left: 20px;
+                margin-top: 20px;
+                font-size: 50px;
+                position: relative;
+                top: 100px;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def titulo_app():
@@ -198,6 +225,9 @@ st.set_page_config(
 )
 
 # Programando a Barra Superior da Aplicação Web
+
+add_logo()
+
 # Título
 titulo_app()
 
