@@ -194,9 +194,23 @@ def ajuda_config():
 
 
 def normaliza_novos_dados(Novos_dados, Normalizador):
-    x = np.array(Novos_dados).reshape(1, -1)
+    # Criando o DataFrame
+    df = pd.DataFrame(Novos_dados)
+
+    # Exibindo o DataFrame
+    st.info(f'Exibindo dados de {nome}')
+    st.dataframe(df)
+    
+    # Separe as colunas categóricas
+    colunas_categoricas = df.select_dtypes(exclude=['int64', 'float64'])
+    
+    le = LabelEncoder()
+    for coluna in colunas_categoricas:
+        df[coluna]=le.fit_transform(df[coluna])
+        
+    # x = np.array(Novos_dados).reshape(1, -1)
     # Transforma o array 1D em 2D
-    x = Normalizador.transform(x)
+    x = Normalizador.transform(df)
     return x
 
 
@@ -354,16 +368,8 @@ if(st.sidebar.button("Clique Para Treinar o Modelo de Random Forest Classifier")
         'Purpose': [finalidade]
     }
 
-    # Criando o DataFrame
-    df = pd.DataFrame(data)
-
-    # Exibindo o DataFrame
-    st.info(f'Exibindo dados de {nome}')
-    st.dataframe(df)
     
-    df = codifica_dados(df)
-    
-    x = normaliza_novos_dados(df, normalizador)
+    x = normaliza_novos_dados(data, normalizador)
     previsao = previsao_novos_dados(random_forest_classifier, x)
     
     # Salvando o modelo
