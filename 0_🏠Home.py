@@ -1,31 +1,5 @@
 import streamlit as st
-
-def add_logo():
-    st.markdown(
-        """
-        <style>
-            [data-testid="stSidebarNav"] {
-                background-image: url(https://yata-apix-ad9f7b35-80ad-4665-829c-2b86020b1c6c.s3-object.locaweb.com.br/cd9cdf75398747d6b544613390fa9aee.png);
-                background-repeat: no-repeat;
-                background-size: 100% auto;
-                margin-top: 35px;
-                padding-top: 75px;
-                position: relative
-                background-position: center;
-            }
-            [data-testid="stSidebarNav"]::before {
-                content: "Main Menu";
-                font-family: sans-serif;
-                margin-left: 20px;
-                margin-top: 20px;
-                font-size: 50px;
-                position: relative;
-                top: 100px;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+from utils.Global import *
 
 
 def titulo_app():
@@ -45,19 +19,6 @@ def rodape():
     
     
 def formulario():
-    # # Crie um formulário
-    # form = st.form(key='formulario')   
-    # # Crie um campo de idade
-    # idade = st.number_input("Idade:", min_value=0, max_value=120, value=22)
-    # # Crie um botão de envio
-    # # botao_enviar = st.form_submit_button(label='Enviar')
-    # # Se o formulário for enviado
-    # if form.form_submit_button('Enviar'):
-    #     st.success('Os dados foram recebidos com sucesso!')
-    #     # Atribua os dados do formulário à sessão
-    #     st.session_state["idade"] = idade
-    
-
     with st.form(key='formulario'):
         nome = st.text_input('Nome').capitalize()
         idade = st.number_input("Idade:", min_value=0, max_value=120, value=22)
@@ -93,13 +54,8 @@ st.set_page_config(
 )
 
 st.sidebar.info('Selecione uma das aplicações acima')
+
 titulo_app()
 add_logo()
-
-
 formulario()
-
-
-
-
 rodape()
