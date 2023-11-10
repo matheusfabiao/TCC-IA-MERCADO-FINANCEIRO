@@ -33,6 +33,7 @@ def add_logo():
             }
             [data-testid="stSidebarNav"]::before {
                 content: "Main Menu";
+                font-family: sans-serif;
                 margin-left: 20px;
                 margin-top: 20px;
                 font-size: 50px;
@@ -247,7 +248,7 @@ def adiciona_camadas(modelo, X_treino, Taxa_dropout):
     modelo.add(Dropout(Taxa_dropout))
 
     # Adicionando camadas densas (fully connected)
-    modelo.add(Dense(units=25))
+    # modelo.add(Dense(units=25))
     modelo.add(Dense(units=1))  # Previsão do próximo preço de fechamento
     return modelo
 
@@ -292,7 +293,7 @@ def faz_previsao(modelo, X_teste, Normalizador):
     return previsoes
 
 
-def calcula_metricas(Previsoes, Y_teste):
+def calcula_metricas(Y_teste, Previsoes):
     # Calcular o Erro Médio Absoluto (MAE)
     mae = mean_absolute_error(Y_teste, Previsoes)
     # Calcular o Erro Médio Quadrático (MSE)
@@ -491,7 +492,7 @@ if(st.sidebar.button("Clique Para Treinar a Rede Neural LSTM")):
     try:
         previsoes = faz_previsao(lstm, x_teste, normalizador)
         # Calcula as métricas
-        mae, mse, rmse, mape, r2 = calcula_metricas(previsoes, y_teste)
+        mae, mse, rmse, mape, r2 = calcula_metricas(y_teste, previsoes)
         # Exibe as métricas no Streamlit
         exibe_metricas(mae, mse, rmse, mape, r2)
         treino, valido = dados_validacao(cotacoes_df, dias_treinamento, previsoes)

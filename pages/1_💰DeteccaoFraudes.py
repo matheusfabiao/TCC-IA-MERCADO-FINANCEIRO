@@ -31,6 +31,7 @@ def add_logo():
             }
             [data-testid="stSidebarNav"]::before {
                 content: "Main Menu";
+                font-family: sans-serif;
                 margin-left: 20px;
                 margin-top: 20px;
                 font-size: 50px;
@@ -92,6 +93,9 @@ def remove_tempo(dados):
 
 # Função para separar transações em fraudes e não fraudes
 def separa_fraudes(dados):
+    # Exibindo o total de dados
+    st.write('O número total de dados é:', len(dados))
+    
     # Separando as transações em não fraudes
     nao_fraudes = dados[dados['Class']==0]
     st.write('O número de transações válidas é de:', len(nao_fraudes))

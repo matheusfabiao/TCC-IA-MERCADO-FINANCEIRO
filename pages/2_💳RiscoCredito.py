@@ -32,6 +32,7 @@ def add_logo():
             }
             [data-testid="stSidebarNav"]::before {
                 content: "Main Menu";
+                font-family: sans-serif;
                 margin-left: 20px;
                 margin-top: 20px;
                 font-size: 50px;
