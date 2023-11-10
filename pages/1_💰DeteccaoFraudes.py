@@ -11,9 +11,6 @@ from utils.Global import *
 # Autor: Matheus Fabião da Costa Pereira
 # Data de Criação: 30/10/2023
 
-    
-# CHAMADA DE FUNÇÕES
-
 st.set_page_config(
     page_title='Detecção de Fraudes Bancárias',
     page_icon='💰'
