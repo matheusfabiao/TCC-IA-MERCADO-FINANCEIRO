@@ -26,7 +26,7 @@ def titulo_app():
 @st.cache_data
 def carrega_dataset():
     try:
-        caminho_dados = '.\data\creditcard1.csv'
+        caminho_dados = r'.\data\creditcard1.csv'
         dados = pd.read_csv(caminho_dados, compression="gzip")
         return dados
     except Exception as e:
