@@ -27,7 +27,8 @@ def titulo_app():
 def carrega_dataset():
     try:
         caminho_dados = './data/creditcard1.csv'
-        dados = pd.read_csv(caminho_dados, compression="gzip")
+        base_dados = pd.read_csv(caminho_dados, compression="gzip")
+        dados = base_dados.copy()
         return dados
     except Exception as e:
         st.error(f'Erro ao carregar dataset: {str(e)}')
