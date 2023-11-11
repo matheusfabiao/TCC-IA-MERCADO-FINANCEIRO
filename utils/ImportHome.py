@@ -35,7 +35,7 @@ def formulario():
         try:
             duracao = int(duracao)
         except:
-            st.write('Por favor, digite uma idade válida.')
+            st.write('Por favor, digite uma duração válida.')
         
         botao_enviar = st.form_submit_button(label='Enviar')
         
