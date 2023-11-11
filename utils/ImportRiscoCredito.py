@@ -31,7 +31,7 @@ def titulo_app():
 def carrega_dataset():
     # Carregando os dados
     try:
-        caminho_dados = r'.\data\risco_credito.csv'
+        caminho_dados = './data/risco_credito.csv'
         dados = pd.read_csv(caminho_dados)
         return dados
     except Exception as e:
