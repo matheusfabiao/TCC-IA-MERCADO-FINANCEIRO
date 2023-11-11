@@ -10,7 +10,6 @@ from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, precision_recall_curve, roc_curve, auc
-from data.creditcard import dataset_load
 
 # Função para exibir o título do aplicativo
 def titulo_app():
@@ -27,7 +26,8 @@ def titulo_app():
 @st.cache_data
 def carrega_dataset():
     try:
-        dados = dataset_load()
+        caminho_dados = r'data\creditcard1.csv'
+        dados = pd.read_csv(caminho_dados, compression="gzip")
         return dados
     except Exception as e:
         st.error(f'Erro ao carregar dataset: {str(e)}')

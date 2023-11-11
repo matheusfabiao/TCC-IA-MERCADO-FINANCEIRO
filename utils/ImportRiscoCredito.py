@@ -12,7 +12,6 @@ import streamlit as st
 from imblearn.over_sampling import SMOTE
 # import pickle
 from utils.Global import *
-from data.risco_credito import dataset_load
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -32,7 +31,8 @@ def titulo_app():
 def carrega_dataset():
     # Carregando os dados
     try:
-        dados = dataset_load()
+        caminho_dados = r'data\risco_credito.csv'
+        dados = pd.read_csv(caminho_dados)
         return dados
     except Exception as e:
         st.error(f'Erro ao carregar dados: {str(e)}')
