@@ -221,7 +221,7 @@ def adiciona_camadas(modelo, X_treino, Taxa_dropout):
     modelo.add(Dropout(Taxa_dropout))
 
     # Adicionando camadas densas (fully connected)
-    # modelo.add(Dense(units=25))
+    modelo.add(Dense(units=25))
     modelo.add(Dense(units=1))  # Previsão do próximo preço de fechamento
     return modelo
 
