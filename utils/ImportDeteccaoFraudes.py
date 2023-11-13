@@ -39,7 +39,7 @@ def carrega_dataset():
 def exibe_dataset(dados) -> None:
     # Exibir os últimos 5 dados do Dataset
     st.subheader('Dataset: Detecção de Fraudes')
-    st.dataframe(dados)
+    st.dataframe(dados.head())
 
 
 # Função para exibir informações sobre o dataset
