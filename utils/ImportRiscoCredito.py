@@ -50,7 +50,7 @@ def exibe_dataset(dados):
     # Exibir os últimos 5 dados do Dataset
     pre_processar_dados(dados)
     st.subheader('Dataset: Risco de Crédito')
-    st.dataframe(dados)
+    st.dataframe(dados.head())
     
     
 def info_dataset():
