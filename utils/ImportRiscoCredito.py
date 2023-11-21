@@ -152,20 +152,15 @@ def ajuda_config():
         # Exibe um expander ao clicar no botão de ajuda
         with st.expander("ℹ️ **Informações de Ajuda**"):
             st.write('''
-                    **Intervalo de Tempo:** quantidade total de dados do ativo nos últimos 'n' anos.
-                    
                     **Divisão dos Dados:** dividir o total de dados em x% para treino da IA. Recomendado entre 0.7 e 0.8
 
-                    **Dropout:** desativa aleatoriamente neurônios durante o treinamento para evitar *overfitting*.
-                    Recomendado: entre 0.2 e 0.5
+                    **n_estimators:** Número de árvores na floresta no algoritmo de Random Forest.
  
-                    **Número de Amostras:** número de exemplos de dados que a IA analisa de uma vez durante o treinamento.
-                    Quanto mais alto mais rápido o treinamento, porém exigirá mais do seu hardware.
+                    **max_depth:** Profundidade máxima de cada árvore na floresta.
  
-                    **Janela de Entrada:** é como uma "memória" que a rede utiliza para processar sequências de dados, lembrando de informações importantes ao longo do tempo.
+                    **min_samples_split:** Número mínimo de amostras necessárias para dividir um nó interno.
  
-                    **Épocas:** quantidade de vezes que a IA percorre todo o conjunto de dados durante o treinamento. Quanto mais alto mais demorado o treinamento, porém,
-                    mais bem treinada ela será.
+                    **Peso das Classes:** Peso atribuído às classes no treinamento para lidar com desequilíbrios, usado principalmente em problemas de classificação.
                     ''')
 
 

@@ -160,18 +160,14 @@ def ajuda_config():
         # Exibe um expander ao clicar no botão de ajuda
         with st.expander("ℹ️ **Informações de Ajuda**"):
             st.write('''
-                    **Intervalo de Tempo:** quantidade total de dados do ativo nos últimos 'n' anos.
-                    
                     **Divisão dos Dados:** dividir o total de dados em x% para treino da IA. Recomendado entre 0.7 e 0.8
 
-                    **Dropout:** desativa aleatoriamente neurônios durante o treinamento para evitar *overfitting*.
-                    Recomendado: entre 0.2 e 0.5
+                    **Algoritmo Solver:** Algoritmo de otimização usado para otimizar a função de custo (e.g., "lbfgs", "liblinear", "sag", "saga") em modelos de regressão logística.
  
-                    **Número de Amostras:** número de exemplos de dados que a IA analisa de uma vez durante o treinamento.
-                    Quanto mais alto mais rápido o treinamento, porém exigirá mais do seu hardware.
+                    **Penalty:** Termo de penalidade aplicado à regularização (e.g., "l1" para L1 regularization, "l2" para L2 regularization) em modelos de regressão logística.
+                    Recomendado: l2 para evitar *overfitting*.
  
-                    **Janela de Entrada:** é como uma "memória" que a rede utiliza para processar sequências de dados, lembrando de informações importantes ao longo do tempo.
+                    **tol:** Tolerância para critério de parada, representando a precisão desejada na otimização em modelos de regressão logística.
  
-                    **Épocas:** quantidade de vezes que a IA percorre todo o conjunto de dados durante o treinamento. Quanto mais alto mais demorado o treinamento, porém,
-                    mais bem treinada ela será.
+                    **max_iteration:** Número máximo de iterações durante a otimização em modelos de regressão logística.
                     ''')
